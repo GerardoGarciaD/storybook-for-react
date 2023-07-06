@@ -4,7 +4,11 @@ import React from "react";
 import { ThemeProvider } from "styled-components";
 import { darkTheme, lightTheme } from '../src/styles/theme';
 import { withDesign } from 'storybook-addon-designs';
+import { BrowserRouter as Router } from 'react-router-dom';
 
+const withRouter: DecoratorFn = (StoryFn) => {
+  return <Router> <StoryFn/> </Router>;
+}
 
 const withTheme: DecoratorFn = (StoryFn, context) =>{
 
@@ -18,5 +22,5 @@ const withTheme: DecoratorFn = (StoryFn, context) =>{
       )
 }
 
-export const globalDecorators = [withTheme, withDesign];
+export const globalDecorators = [withTheme, withDesign, withRouter];
 
