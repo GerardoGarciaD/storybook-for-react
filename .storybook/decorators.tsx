@@ -2,15 +2,20 @@ import { DecoratorFn } from "@storybook/react"
 import { GlobalStyle } from '../src/styles/GlobalStyle';
 import React from "react";
 import { ThemeProvider } from "styled-components";
-import { lightTheme } from '../src/styles/theme';
+import { darkTheme, lightTheme } from '../src/styles/theme';
 
 
-const withTheme: DecoratorFn = (StoryFn) =>(
-    <ThemeProvider theme={lightTheme}>
-      <GlobalStyle />
-      <StoryFn />
-    </ThemeProvider>
-  )
+const withTheme: DecoratorFn = (StoryFn, context) =>{
 
-  export const globalDecorators = [withTheme];
+  const theme = context.parameters.theme || context.globals.theme
+  const storyTheme = theme === 'light' ? lightTheme : darkTheme;
+  return (
+      <ThemeProvider theme={storyTheme}>
+        <GlobalStyle />
+        <StoryFn />
+      </ThemeProvider>
+      )
+}
+
+export const globalDecorators = [withTheme];
 
